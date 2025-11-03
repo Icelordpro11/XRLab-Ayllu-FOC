@@ -1,0 +1,127 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-4968404149758708698
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Editor::UnityEditor.Rendering.Universal.AssetVersion
+  version: 10
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: mountain4
+  m_Shader: {fileID: -6465566751694194690, guid: 966e381d0ea958d49bd6a4ea10314ed0, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords:
+  - _BLEND_MODE_MULTIPLY
+  m_InvalidKeywords: []
+  m_LightmapFlags: 2
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses:
+  - MOTIONVECTORS
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _2texture:
+        m_Texture: {fileID: 2800000, guid: 5ef0c6917b6fc0f42ae7d04cbb508dea, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture2DAsset_0574bcfd8c9a43449f4c3fec84676a07_Out_0_Texture2D:
+        m_Texture: {fileID: 2800000, guid: ea2439d30c6c4ed449c8c9e8e25f630e, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture2DAsset_c0c8e2bac5ab4af594195bdbf67dc0a7_Out_0_Texture2D:
+        m_Texture: {fileID: 2800000, guid: f71386503ffaf2c4c9bdf282048b2e36, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture2DAsset_de7ebc0252a3461ba6f1dec1792552e6_Out_0_Texture2D:
+        m_Texture: {fileID: 2800000, guid: f71386503ffaf2c4c9bdf282048b2e36, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _color:
+        m_Texture: {fileID: 2800000, guid: a327e1aa4809d8247969908c583acc9e, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _maintexture:
+        m_Texture: {fileID: 2800000, guid: 0021a7dbaf6c04249ae6cfa98e1eda4a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _normal:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _normaltexture:
+        m_Texture: {fileID: 2800000, guid: 750c2d5737c16424aac3b54333b8028e, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _texturemultpily:
+        m_Texture: {fileID: 2800000, guid: a327e1aa4809d8247969908c583acc9e, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - LIGHTMAP_SHADOW_MIXING: 0
+    - SHADOWS_SHADOWMASK: 0
+    - _2textureheight: 0
+    - _BLEND_MODE: 0
+    - _Float: 0.26
+    - _NoiseDisplacement: 0.5
+    - _NoiseScale: 300
+    - _QueueControl: 0
+    - _QueueOffset: 0
+    - _ShadowAmount: 2
+    - _ShadowGradientOffset: 2
+    - _ShadowGradientThreshold: 0.1
+    - _XRMotionVectorsPass: 1
+    - _anglefix: 0
+    - _float: 0
+    - _gloss2: 0
+    - _gloss_1: -12
+    - _grassheight: 1
+    - _grassorsnow: 0
+    - _heightsnowandgrass: 0.909
+    - _invert: 0
+    - _second_texture_conytrol: -1
+    - _secondtexture: 4.09
+    - _texture_choice_blend: 25
+    - _texture_mix: 0.118
+    - _value: -2.06
+    m_Colors:
+    - _Light_Color: {r: 0.11725702, g: 0.2194414, b: 0.2924528, a: 0}
+    - _ShadowColor: {r: 1, g: 1, b: 1, a: 1}
+    - _grass_1: {r: 0.36062497, g: 0.577, b: 0.40389997, a: 1}
+    - _snow_1: {r: 0.6056034, g: 0.7610241, b: 0.7660377, a: 1}
+  m_BuildTextureStacks: []
+  m_AllowLocking: 1
