@@ -7,7 +7,6 @@ public class TagTriggerSystem : MonoBehaviour
     [SerializeField] private string targetTag = "Player";
 
     [Header("Trigger Events")] 
-    
     [SerializeField] private UnityEvent onTagEnter;
     [SerializeField] private UnityEvent onTagExit;
     
@@ -17,11 +16,8 @@ public class TagTriggerSystem : MonoBehaviour
         RPCOnTriggerEnter();
     }
 
-    public void RPCOnTriggerEnter()
-    {
-        onTagEnter?.Invoke();
-        Debug.Log("Tag Entered");
-    }
+    [ContextMenu("TagEnter Event")]
+    public void RPCOnTriggerEnter() => onTagEnter?.Invoke();
 
     private void OnTriggerExit(Collider other)
     {
@@ -29,9 +25,6 @@ public class TagTriggerSystem : MonoBehaviour
         RPCOnTriggerExit();
     }
 
-    public void RPCOnTriggerExit()
-    {
-        onTagExit?.Invoke();
-        Debug.Log("Tag Exit");
-    }
+    [ContextMenu("TagExit Event")]
+    public void RPCOnTriggerExit() => onTagExit?.Invoke();
 }
