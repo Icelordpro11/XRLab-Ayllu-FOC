@@ -17,15 +17,6 @@ public class TransitionManager : MonoBehaviour
     [SerializeField] private UnityEvent _onSwitchedEventToMR;
     
     private float _startOpacity; // Used to store the initial opacity of the passthrough layer
-
-    private void Start()
-    {
-        _vrFloorDetector = FindAnyObjectByType<VRFloorDetector>();
-        _vrFloorDetector.enabled = false;
-        _cam = Camera.main;
-        _passthroughLayer = FindAnyObjectByType<OVRPassthroughLayer>();
-        _vrOjbects.gameObject.SetActive(false);
-    }
     
     // Starts the fade-out coroutine (used to transition from MR to VR)
     public void FadeOut()

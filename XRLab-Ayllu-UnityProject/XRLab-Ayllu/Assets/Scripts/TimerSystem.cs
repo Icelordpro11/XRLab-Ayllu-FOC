@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -12,47 +14,57 @@ public class TimerSystem : MonoBehaviour
     [SerializeField, Tooltip("Invoked when the timer finishes.")]
     private UnityEvent OnTimerEnded;
 
-    private Coroutine _timerRoutine;
-
-    /// <summary>
-    /// True if the timer is currently running.
-    /// </summary>
     public bool IsRunning { get; private set; }
 
-    /// <summary>
-    /// Starts a timer to invoke an event after X seconds where X = time.
-    /// </summary>
+    private CancellationTokenSource _cts;
+
     [ContextMenu("Start Timer")]
-    public void StartTimer()
+    public async void StartTimer()
     {
         if (IsRunning)
         {
-            Debug.LogWarning($"Timer is already running on {gameObject.name}");
+            Debug.LogWarning($"Timer already running on {gameObject.name}");
             return;
         }
 
-        _timerRoutine = StartCoroutine(Timer(_timerTime));
+        _cts = new CancellationTokenSource();
+        IsRunning = true;
+        
+        try
+        {
+            await Task.Delay(TimeSpan.FromSeconds(_timerTime), _cts.Token);
+
+            if (!_cts.IsCancellationRequested)
+            {
+                IsRunning = false;
+                OnTimerEnded?.Invoke();
+            }
+        }
+        catch (TaskCanceledException)
+        {
+            // ignored
+        }
+        finally
+        {
+            _cts?.Dispose();
+            _cts = null;
+            IsRunning = false;
+        }
     }
 
-    /// <summary>
-    /// Stops the timer before it finishes.
-    /// </summary>
     [ContextMenu("Stop Timer")]
     public void StopTimer()
     {
-        if (_timerRoutine == null) return;
-        StopCoroutine(_timerRoutine);
-        _timerRoutine = null;
+        if (!IsRunning) return;
+
+        _cts?.Cancel();
+        _cts?.Dispose();
+        _cts = null;
         IsRunning = false;
     }
 
-    private IEnumerator Timer(float time)
+    private void OnDisable()
     {
-        IsRunning = true;
-        yield return new WaitForSeconds(time);
-
-        IsRunning = false;
-        _timerRoutine = null;
-        OnTimerEnded?.Invoke();
+        StopTimer();
     }
 }
