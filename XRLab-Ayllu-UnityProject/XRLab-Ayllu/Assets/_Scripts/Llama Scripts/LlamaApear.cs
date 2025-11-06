@@ -1,32 +1,49 @@
-using System.Collections;
 using UnityEngine;
+using Cysharp.Threading.Tasks;
 
 public class LlamaApear : MonoBehaviour
 {
-    private static readonly string Dissapear = "Dissappear";
-    [SerializeField] private Material[] _materials;
-    private float _time = 1;
+    private static readonly int Dissapear = Shader.PropertyToID("_Dissappear");
 
-    private void Start()
+    [Header("Material Settings")]
+    [SerializeField] private Material[] _materials;
+
+    [Header("Timing Settings")]
+    [SerializeField, Range(0.1f, 5f)] private float _duration = 1f;
+
+    /// <summary>
+    /// Makes the llama gradually appear by adjusting the "_Dissappear" shader value.
+    /// </summary>
+    public async UniTask StartAppearing()
     {
-        StartCoroutine(c_Start());
+        float start = 1f;
+        float end = -0.9f;
+        float elapsed = 0f;
+
+        while (elapsed < _duration)
+        {
+            elapsed += Time.deltaTime;
+            float value = Mathf.Lerp(start, end, elapsed / _duration);
+
+            foreach (var mat in _materials)
+            {
+                if (mat != null)
+                    mat.SetFloat(Dissapear, value);
+            }
+
+            await UniTask.Yield(PlayerLoopTiming.Update);
+        }
+        
+        foreach (var mat in _materials)
+        {
+            if (mat != null)
+                mat.SetFloat(Dissapear, -0.9f);
+        }
     }
 
-    private IEnumerator c_Start()
+    [ContextMenu("Test StartAppearing")]
+    private void TestStartAppearing()
     {
-        while (_time>-0.9)
-        {
-            Debug.Log(_time);
-            foreach (var i in _materials)
-            {
-                i.SetFloat(Dissapear, _time);
-            }
-            _time -= Time.deltaTime;
-            yield return new WaitForEndOfFrame();
-        }
-        foreach (var i in _materials)
-        {
-            i.SetFloat(Dissapear, 0.9f);
-        }
+        StartAppearing().Forget();
     }
 }
