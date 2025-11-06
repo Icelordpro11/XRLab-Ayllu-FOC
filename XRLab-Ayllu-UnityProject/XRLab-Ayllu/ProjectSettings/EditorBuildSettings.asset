@@ -11,6 +11,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Main - Scenes/FullScene_Single Experience.unity
     guid: 97c86a9ace19b454ab300ec69867d015
+  - enabled: 0
+    path: Assets/Fragilem17/Portals for VR/Demo/Scenes/DemoScene.unity
+    guid: 6273370be7d75e1488f56c38966374c6
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 947bddbe652074642b3a15a0790949f6, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
