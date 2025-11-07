@@ -42,7 +42,7 @@ public class LlamaApear : MonoBehaviour
     }
 
     [ContextMenu("Test StartAppearing")]
-    private void TestStartAppearing()
+    public void TestStartAppearing()
     {
         StartAppearing().Forget();
     }

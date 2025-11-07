@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Threading;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
+using Cysharp.Threading.Tasks;
 
+/// <summary>
+/// A UniTask-based timer system that waits for a set duration before invoking an event.
+/// It supports cancellation, editor context menu control, and Unity lifecycle cleanup.
+/// </summary>
 public class TimerSystem : MonoBehaviour
 {
     [Header("Timer Settings")]
@@ -14,12 +18,20 @@ public class TimerSystem : MonoBehaviour
     [SerializeField, Tooltip("Invoked when the timer finishes.")]
     private UnityEvent OnTimerEnded;
 
+    /// <summary>
+    /// True if the timer is currently running.
+    /// </summary>
     public bool IsRunning { get; private set; }
 
     private CancellationTokenSource _cts;
 
     [ContextMenu("Start Timer")]
-    public async void StartTimer()
+    public void StartTimer() => StartTimerAsync().Forget();
+
+    /// <summary>
+    /// Starts a UniTask timer that invokes the event after the specified duration.
+    /// </summary>
+    private async UniTaskVoid StartTimerAsync()
     {
         if (IsRunning)
         {
@@ -29,20 +41,18 @@ public class TimerSystem : MonoBehaviour
 
         _cts = new CancellationTokenSource();
         IsRunning = true;
-        
+
         try
         {
-            await Task.Delay(TimeSpan.FromSeconds(_timerTime), _cts.Token);
+            // Wait using UniTask.Delay with cancellation
+            await UniTask.Delay(TimeSpan.FromSeconds(_timerTime), cancellationToken: _cts.Token);
 
             if (!_cts.IsCancellationRequested)
-            {
-                IsRunning = false;
                 OnTimerEnded?.Invoke();
-            }
         }
-        catch (TaskCanceledException)
+        catch (OperationCanceledException)
         {
-            // ignored
+            // Timer stopped manually
         }
         finally
         {
