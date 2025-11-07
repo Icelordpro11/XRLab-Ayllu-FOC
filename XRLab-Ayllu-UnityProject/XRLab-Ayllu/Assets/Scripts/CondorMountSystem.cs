@@ -294,6 +294,7 @@ public class CondorMountSystem : MonoBehaviour
         }
     }
 
+    [ContextMenu("Start Mounting")]
     public void StartMounting()
     {
         if (isMounting || isMounted)

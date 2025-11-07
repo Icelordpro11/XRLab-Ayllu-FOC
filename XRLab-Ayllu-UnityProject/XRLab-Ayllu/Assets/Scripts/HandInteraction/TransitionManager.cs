@@ -9,7 +9,6 @@ public class TransitionManager : MonoBehaviour
     [SerializeField] private Camera _cam;
     [SerializeField] private OVRPassthroughLayer _passthroughLayer;
     [SerializeField] private float _fadeDuration;
-    [SerializeField] private GameObject _mrOjbects;
     [SerializeField] private GameObject _vrOjbects;
     [SerializeField] private SpriteAnimation _spriteAnimation;
 
@@ -49,7 +48,6 @@ public class TransitionManager : MonoBehaviour
         }
         
         _onSwitchedEventToVR.Invoke();
-        _mrOjbects.SetActive(false);
         _vrOjbects.SetActive(true);
         _cam.clearFlags = CameraClearFlags.Skybox; // Change Camera to VR
         _vrFloorDetector.enabled = true;
@@ -84,32 +82,5 @@ public class TransitionManager : MonoBehaviour
         }
         _onSwitchedEventToMR.Invoke();
         _vrOjbects.SetActive(false);
-        _mrOjbects.SetActive(true);
     }
 }
-
-// [Header("Light Sphere")]
-// [SerializeField] private Transform _snapPoint;
-// [SerializeField] private float _sphereSpeed;
-// [SerializeField] private float _minDist; // Minimum distance threshold to stop moving the sphere
-
-// // Coroutine that moves the sphere to the snap point smoothly
-// public IEnumerator MoveSphere(Transform sphere)
-// {
-//     Vector3 endPos = _snapPoint.position;
-//     
-//     // Continue moving until the sphere is close enough to the target
-//     while (Vector3.Distance(sphere.position, endPos) > _minDist)
-//     {
-//         // Move the sphere a small step toward the target each frame
-//         sphere.position = Vector3.MoveTowards(
-//             sphere.position,
-//             endPos,
-//             _sphereSpeed * Time.deltaTime
-//         );
-//         
-//         yield return null; // Wait until the next frame before continuing
-//     }
-//     
-//     FadeOut(); // Once the sphere reaches the snap point, start fading out MR visuals
-// }

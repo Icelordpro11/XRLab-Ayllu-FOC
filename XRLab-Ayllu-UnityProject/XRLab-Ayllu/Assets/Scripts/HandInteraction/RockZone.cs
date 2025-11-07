@@ -11,11 +11,6 @@ public class RockZone : MonoBehaviour
     
     private List<Transform> _stones = new List<Transform>();
 
-    private void Start()
-    {
-        _stackManager = FindAnyObjectByType<StackManager>();
-    }
-
     private void OnTriggerEnter(Collider stone)
     {
         TryAddStone(stone);
