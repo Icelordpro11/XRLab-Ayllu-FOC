@@ -1,6 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -8,14 +9,14 @@ public class SpriteAnimation : MonoBehaviour
 {
     [Header("Animation Settings")]
     [Tooltip("If true, the animation will loop instead of stopping at the last frame.")]
-    public bool CanLoop;
+    [SerializeField] private bool _canLoop = false;
 
     [Tooltip("Time in seconds between frames.")]
-    [SerializeField] private float _animSpeedPerFrame = 0.1f;
+    [SerializeField, Range(0.01f, 1f)] private float _animSpeedPerFrame = 0.1f;
 
     [Header("References")]
     [SerializeField] private MeshRenderer _meshRenderer;
-    [SerializeField] private List<Texture2D> _sprites;
+    [SerializeField] private List<Texture2D> _sprites = new();
 
     [Header("Events")]
     [Tooltip("Invoked when the animation finishes (only fires if CanLoop is false).")]
@@ -23,59 +24,71 @@ public class SpriteAnimation : MonoBehaviour
 
     private Material _material;
     private int _currentFrame;
-    private Coroutine _animationRoutine;
+    private CancellationTokenSource _cts;
 
-    /// <summary>
-    /// True if the animation has reached the end and stopped.
-    /// </summary>
+    /// <summary>True if the animation has reached the end and stopped.</summary>
     public bool IsFinished { get; private set; }
 
+    private void OnEnable() => StartAnimation().Forget();
+
+    private void OnDisable() => StopAnimation();
+
     [ContextMenu("Start Sprite Animation")]
-    public void StartAnimation()
+    public async UniTaskVoid StartAnimation()
     {
-        if (_animationRoutine != null)
-            StopCoroutine(_animationRoutine);
+        StopAnimation(); // Ensure any previous animation is stopped
 
-        _animationRoutine = StartCoroutine(PlayAnimation());
-    }
+        if (_meshRenderer == null)
+        {
+            Debug.LogWarning($"[{nameof(SpriteAnimation)}] Missing MeshRenderer reference on {name}");
+            return;
+        }
 
-    private IEnumerator PlayAnimation()
-    {
+        _material ??= _meshRenderer.material;
+
+        if (_sprites == null || _sprites.Count == 0)
+        {
+            Debug.LogWarning($"[{nameof(SpriteAnimation)}] No sprites assigned on {name}");
+            return;
+        }
+
+        _cts = new CancellationTokenSource();
         IsFinished = false;
-
-        if (_meshRenderer != null && _material == null)
-            _material = _meshRenderer.material;
-
-        if (_sprites == null || _sprites.Count == 0 || _material == null)
-            yield break;
-
         _currentFrame = 0;
 
-        while (true)
+        try
+        {
+            await PlayAnimationAsync(_cts.Token);
+        }
+        catch (OperationCanceledException)
+        {
+            // Animation was stopped or object disabled
+        }
+    }
+
+    private async UniTask PlayAnimationAsync(CancellationToken token)
+    {
+        while (!token.IsCancellationRequested)
         {
             UpdateMaterial();
 
-            yield return new WaitForSeconds(_animSpeedPerFrame);
+            await UniTask.Delay(TimeSpan.FromSeconds(_animSpeedPerFrame), cancellationToken: token);
 
             _currentFrame++;
 
-            // Check if animation reached the end
             if (_currentFrame < _sprites.Count) continue;
-            if (CanLoop)
+            if (_canLoop)
             {
                 _currentFrame = 0;
-                IsFinished = false;
             }
             else
             {
                 _currentFrame = _sprites.Count - 1;
                 IsFinished = true;
-                OnAnimationFinished?.Invoke(); // 🔥 Fire UnityEvent
+                OnAnimationFinished?.Invoke();
                 break;
             }
         }
-
-        _animationRoutine = null;
     }
 
     private void UpdateMaterial()
@@ -90,12 +103,14 @@ public class SpriteAnimation : MonoBehaviour
     [ContextMenu("Stop Animation")]
     public void StopAnimation()
     {
-        if (_animationRoutine != null)
-        {
-            StopCoroutine(_animationRoutine);
-            _animationRoutine = null;
-        }
+        if (_cts == null)
+            return;
 
+        if (!_cts.IsCancellationRequested)
+            _cts.Cancel();
+
+        _cts.Dispose();
+        _cts = null;
         IsFinished = true;
     }
 }
