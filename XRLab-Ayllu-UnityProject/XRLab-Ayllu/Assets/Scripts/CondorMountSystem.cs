@@ -22,6 +22,8 @@ public class CondorMountSystem : MonoBehaviour
     [SerializeField] private float stayWhiteDuration = 1f; // How long to stay white before fading out
     [SerializeField] private float fadeOutDuration = 1f;
     [SerializeField] private float delayBeforeFlight = 0.5f; // Short delay before flight starts
+    [SerializeField] private float condorOffset;
+    
     
     [Header("Debug")]
     [SerializeField] private bool enableDebugLogs = true;
@@ -418,14 +420,27 @@ public class CondorMountSystem : MonoBehaviour
         }
 
         // Enable the flying condor
-        if (condorToEnable != null)
-        {
-            condorToEnable.SetActive(true);
-            condorToEnable.gameObject.transform.position = vrCamera.position;
-            DebugLog($"  Enabled condor: {condorToEnable.name}");
-        }
+        if (condorToEnable == null) return;
+        condorToEnable.SetActive(true);
+        PositionCondor(vrCamera, condorToEnable, condorOffset);
+        DebugLog($"  Enabled condor: {condorToEnable.name}");
     }
+    
+    /// <summary>
+    /// Positions the specified condor above (or below) the VR camera
+    /// by a given Y-axis offset.
+    /// </summary>
+    private void PositionCondor(Transform cameraTransform, GameObject condorObject, float verticalOffset)
+    {
+        if (cameraTransform == null || condorObject == null)
+            return;
 
+        Vector3 targetPosition = cameraTransform.position;
+        targetPosition.y += verticalOffset;
+
+        condorObject.transform.position = targetPosition;
+    }
+    
     private void SwapCondorsBack()
     {
         // Re-enable the sitting condor

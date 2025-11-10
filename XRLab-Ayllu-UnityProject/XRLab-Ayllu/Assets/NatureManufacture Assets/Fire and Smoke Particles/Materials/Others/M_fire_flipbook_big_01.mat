@@ -349,8 +349,7 @@ Material:
     - _ZWrite: 0
     - _ZWriteControl: 0
     m_Colors:
-    - Color_4b37df9bf8754a7fa651c36c44d4e2eb: {r: 290.63724, g: 290.63724, b: 290.63724,
-        a: 0}
+    - Color_4b37df9bf8754a7fa651c36c44d4e2eb: {r: 290.63724, g: 290.63724, b: 290.63724, a: 0}
     - _BaseColor: {r: 0, g: 0, b: 0, a: 1}
     - _BaseColorMap_MipInfo: {r: 0, g: 0, b: 0, a: 0}
     - _CameraFadeParams: {r: 0, g: Infinity, b: 0, a: 0}
@@ -359,7 +358,7 @@ Material:
     - _DiffusionProfileAsset: {r: 0, g: 0, b: 0, a: 0}
     - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Emission_Color: {r: 445.72195, g: 445.72195, b: 445.72195, a: 0}
+    - _Emission_Color: {r: 445.72195, g: 445.72195, b: 445.72195, a: 1}
     - _EmissiveColor: {r: 107.157745, g: 40.94235, b: 40.94235, a: 1}
     - _EmissiveColorLDR: {r: 0, g: 0, b: 0, a: 1}
     - _InvPrimScale: {r: 1, g: 1, b: 0, a: 0}
