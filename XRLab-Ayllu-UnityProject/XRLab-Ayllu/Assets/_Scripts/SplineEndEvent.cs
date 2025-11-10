@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Splines; // Make sure you have the Unity Splines package
+using UnityEngine.Splines;
 
 /// <summary>
 /// Invokes a UnityEvent when the attached SplineAnimate
