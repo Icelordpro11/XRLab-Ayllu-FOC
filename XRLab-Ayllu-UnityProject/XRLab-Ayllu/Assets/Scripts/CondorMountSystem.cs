@@ -421,6 +421,7 @@ public class CondorMountSystem : MonoBehaviour
         if (condorToEnable != null)
         {
             condorToEnable.SetActive(true);
+            condorToEnable.gameObject.transform.position = vrCamera.position;
             DebugLog($"  Enabled condor: {condorToEnable.name}");
         }
     }
