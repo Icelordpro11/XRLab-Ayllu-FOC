@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Events;
 
 public class CondorMountSystem : MonoBehaviour
 {
@@ -23,7 +24,7 @@ public class CondorMountSystem : MonoBehaviour
     [SerializeField] private float fadeOutDuration = 1f;
     [SerializeField] private float delayBeforeFlight = 0.5f; // Short delay before flight starts
     [SerializeField] private float condorOffset;
-    
+    [SerializeField] private UnityEvent onMountingEvent;
     
     [Header("Debug")]
     [SerializeField] private bool enableDebugLogs = true;
@@ -327,6 +328,7 @@ public class CondorMountSystem : MonoBehaviour
 
         // 1. Fade to white
         DebugLog("Step 1: Fading to white...");
+        onMountingEvent?.Invoke();
         yield return StartCoroutine(FadeToAlpha(1f, fadeInDuration));
 
         // 2. INSTANT teleport to mount position (happens while screen is white)
@@ -439,6 +441,7 @@ public class CondorMountSystem : MonoBehaviour
         targetPosition.y += verticalOffset;
 
         condorObject.transform.position = targetPosition;
+        condorObject.transform.rotation = cameraTransform.rotation * Quaternion.Euler(0f, 180f, 0f);
     }
     
     private void SwapCondorsBack()
