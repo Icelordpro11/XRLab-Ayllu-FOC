@@ -1404,10 +1404,10 @@ MonoBehaviour:
   m_Children: []
   m_Clips:
   - m_Version: 1
-    m_Start: 158.31666666666666
+    m_Start: 145.88386294397836
     m_ClipIn: 0
     m_Asset: {fileID: -6860222295622752390}
-    m_Duration: 25.158291666666727
+    m_Duration: 37.59109538935503
     m_TimeScale: 1
     m_ParentTrack: {fileID: 8207889161719144945}
     m_EaseInDuration: 0

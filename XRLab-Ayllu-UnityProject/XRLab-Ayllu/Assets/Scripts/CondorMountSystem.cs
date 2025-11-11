@@ -122,6 +122,7 @@ public class CondorMountSystem : MonoBehaviour
         if (sittingZone != null)
         {
             DebugLog($"Sitting zone detector found: {sittingZone.gameObject.name}");
+            sittingZone.enabled = false;
         }
         else
         {
