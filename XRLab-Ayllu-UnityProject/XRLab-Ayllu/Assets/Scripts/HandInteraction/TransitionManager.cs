@@ -8,87 +8,87 @@ using UnityEngine.Events;
 /// </summary>
 public class TransitionManager : MonoBehaviour
 {
-    [Header("References")]
-    [SerializeField] private VRFloorDetector _vrFloorDetector;
+    [Header("References")] [SerializeField]
+    private VRFloorDetector _vrFloorDetector;
+
     [SerializeField] private Camera _cam;
     [SerializeField] private OVRPassthroughLayer _passthroughLayer;
     [SerializeField] private GameObject _vrObjects;
 
-    [Header("Settings")]
-    [SerializeField, Tooltip("Duration of fade transition in seconds.")]
+    [Header("Settings")] [SerializeField, Tooltip("Duration of fade transition in seconds.")]
     private float _fadeDuration = 1f;
 
-    [Header("Events")]
-    [SerializeField] private UnityEvent _onSwitchedToVR;
+    [Header("Events")] [SerializeField] private UnityEvent _onSwitchedToVR;
     [SerializeField] private UnityEvent _onSwitchedToMR;
 
     private float _startOpacity;
 
-    #region === TRANSITION TO VR ===
-    /// <summary>
-    /// Starts the transition from Mixed Reality to Virtual Reality.
-    /// </summary>
-    [ContextMenu("Fade To VR")]
-    public void FadeToVR()
+    public void FadeOut()
     {
-        StopAllCoroutines();
-        StartCoroutine(FadeToTarget(0f, isToVR: true));
+        StartCoroutine(FadeToVR(0f)); // Fade opacity to 0 (fully transparent)
     }
-    #endregion
 
-    #region === TRANSITION TO MR ===
-    /// <summary>
-    /// Starts the transition from Virtual Reality back to Mixed Reality.
-    /// </summary>
-    [ContextMenu("Fade To MR")]
-    public void FadeToMR()
+    // Coroutine that gradually changes the passthrough layer opacity
+    IEnumerator FadeToVR(float targetOpacity)
     {
-        StopAllCoroutines();
-        StartCoroutine(FadeToTarget(1f, isToVR: false));
-    }
-    #endregion
+        // while (!_spriteAnimation.IsFinished)
+        // {
+        //     _spriteAnimation.AdvanceAnimationFrame(); // Updates the current animation frame based on elapsed time.
+        //     yield return null; // Wait until the next frame before continuing
+        // }
 
-    #region === FADE CORE ===
-    private IEnumerator FadeToTarget(float targetOpacity, bool isToVR)
-    {
         _startOpacity = _passthroughLayer.textureOpacity;
         float elapsedTime = 0f;
 
-        if (isToVR)
-        {
-            // Prepare for transition to VR
-            _vrFloorDetector.enabled = true;
-            _cam.clearFlags = CameraClearFlags.Skybox;
-        }
-        else
-        {
-            // Prepare for transition back to MR
-            _vrFloorDetector.enabled = false;
-            _cam.clearFlags = CameraClearFlags.SolidColor;
-        }
-
-        // Fade effect
+        // Gradually interpolate the opacity value over time
         while (elapsedTime < _fadeDuration)
         {
             elapsedTime += Time.deltaTime;
             float t = elapsedTime / _fadeDuration;
+
+            // Smoothly interpolate between start and target opacity
             _passthroughLayer.textureOpacity = Mathf.Lerp(_startOpacity, targetOpacity, t);
+
+            yield return null; // Wait for next frame
+        }
+
+        _onSwitchedToVR.Invoke();
+        _vrObjects.SetActive(true);
+        _cam.clearFlags = CameraClearFlags.Skybox; // Change Camera to VR
+        _vrFloorDetector.enabled = true;
+    }
+
+    // Starts the fade-in coroutine (used to transition from VR to MR)
+    public void FadeIn()
+    {
+        StartCoroutine(FadeToMR(1f)); // Fade opacity to 100% (fully visible)
+    }
+
+    // Coroutine that gradually changes the passthrough layer opacity
+    private IEnumerator FadeToMR(float targetOpacity)
+    {
+        _startOpacity = _passthroughLayer.textureOpacity;
+        float elapsedTime = 0f;
+
+        // Gradually interpolate the opacity value over time (fade IN passthrough)
+        while (elapsedTime < _fadeDuration)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = elapsedTime / _fadeDuration;
+
+            // Smoothly interpolate between start and target opacity
+            _passthroughLayer.textureOpacity = Mathf.Lerp(_startOpacity, targetOpacity, t);
+
             yield return null;
         }
 
-        // Apply final state
+        // Finalize transition back to MR
         _passthroughLayer.textureOpacity = targetOpacity;
 
-        if (isToVR)
-        {
-            _vrObjects.SetActive(true);
-            _onSwitchedToVR?.Invoke();
-        }
-        else
-        {
-            _vrObjects.SetActive(false);
-            _onSwitchedToMR?.Invoke();
-        }
+        _vrObjects.SetActive(false);
+        _cam.clearFlags = CameraClearFlags.SolidColor; // back to passthrough view
+        _vrFloorDetector.enabled = false;
+
+        _onSwitchedToMR?.Invoke();
     }
-    #endregion
 }
