@@ -10,7 +10,7 @@ public class GameStartHandler : MonoBehaviour
     private void Update()
     {
         if (!OVR_Helper.IsControllerConnected()) return;
-        if (OVRInput.GetDown(OVRInput.Button.One)) StartTheGame();
+        if (OVRInput.GetDown(OVRInput.Button.Start)) StartTheGame();
     }
 
     [ContextMenu("Start Game")]
