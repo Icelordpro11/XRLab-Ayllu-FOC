@@ -9,12 +9,12 @@ EditorBuildSettings:
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 0
-    path: Assets/Scenes/Main - Scenes/FullScene_Single Experience.unity
+    path: Assets/Scenes/Test - Scenes/FullScene_Single Experience.unity
     guid: 97c86a9ace19b454ab300ec69867d015
   - enabled: 0
     path: Assets/Plugins/Fragilem17 1/Portals for VR/Demo/Scenes/DemoScene.unity
     guid: 6273370be7d75e1488f56c38966374c6
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Test - Scenes/Single Player Experience - Scene.unity
     guid: 3026a42a3df5f784c985068ed541d6ac
   m_configObjects:
