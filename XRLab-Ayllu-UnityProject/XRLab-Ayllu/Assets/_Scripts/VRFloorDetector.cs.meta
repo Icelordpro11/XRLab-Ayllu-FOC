@@ -1,10 +1,11 @@
 fileFormatVersion: 2
-guid: b0303960230cead438003585c5b9ba4d
+guid: b8d4f7611b152ee44a49e1e578d17697
+labels:
+- Scripts
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences:
-  - _Skybox_Day: {fileID: 2100000, guid: 9d331bc269ac2cd42bd3f63555c44dbc, type: 2}
+  defaultReferences: []
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
