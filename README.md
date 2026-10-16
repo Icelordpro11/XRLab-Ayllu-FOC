@@ -102,34 +102,13 @@ Creates particle effects across an animated skinned mesh and updates particle po
 
 Additional story sequences, character animations, and visual effects from the project.
 
-### Story Sequences
-
-<p align="center">
-  <img src="Docs/ayllu.png" alt="Ayllu project artwork" width="700">
-</p>
-
 - [Ayllu Fire Story — Video](Docs/Ayllu%20Fire%20Story.mp4)
 - [Condor Arrival — Video](Docs/Condor%20Arival.mov)
 - [Condor Landing — Video](Docs/Condor%20Landing.mp4)
-
-### Character Animations
-
-<p align="center">
-  <img src="Docs/Fox%20Dancing.gif" alt="Fox dancing animation" width="420">
-  <img src="Docs/Pigeon.gif" alt="Pigeon animation" width="420">
-</p>
-
 - [Fox Dancing — GIF](Docs/Fox%20Dancing.gif)
 - [Pigeon Animation — GIF](Docs/Pigeon.gif)
 - [Cross Animation — GIF](Docs/Cross.gif)
 - [Llama Appearance — GIF](Docs/Llama%20Apear.gif)
-
-### Visual Effects
-
-<p align="center">
-  <img src="Docs/Hand%20VFX.gif" alt="Hand visual effects animation" width="600">
-</p>
-
 - [Hand VFX — GIF](Docs/Hand%20VFX.gif)
 
 ---
